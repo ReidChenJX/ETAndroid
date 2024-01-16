@@ -235,3 +235,21 @@ message G2C_Benchmark // IResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+//ResponseType A2C_LoginAccount
+message C2A_LoginAccount // IRequest
+{
+	int32 RpcId = 1;
+	string AccountName = 2;
+	string PassWord = 3;
+}
+
+message A2C_LoginAccount // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string Token = 4;
+	int64 AccountId = 5;
+
+}

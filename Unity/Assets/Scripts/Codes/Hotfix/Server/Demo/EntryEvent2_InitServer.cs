@@ -19,6 +19,10 @@ namespace ET.Server
 
             Root.Instance.Scene.AddComponent<NavmeshComponent>();
 
+            // 数据库链接组件
+            Root.Instance.Scene.AddComponent<DBManagerComponent>();
+
+
             StartProcessConfig processConfig = StartProcessConfigCategory.Instance.Get(Options.Instance.Process);
             switch (Options.Instance.AppType)
             {

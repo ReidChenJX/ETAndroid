@@ -17,6 +17,9 @@
 		BenchmarkServer = 11,
 		Benchmark = 12,
 
+		// 自定义 SceneType
+		Account = 13,
+
 		// 客户端Model层
 		Client = 31,
 		Current = 34,
