@@ -12,6 +12,9 @@ namespace ET.Client
             clientScene.AddComponent<CurrentScenesComponent>();
             clientScene.AddComponent<ObjectWait>();
             clientScene.AddComponent<PlayerComponent>();
+
+            // 自定义增加 AccountInfoComponent 用于保留登录验证后的token与accountId
+            clientScene.AddComponent<AccountInfoComponent>();
             
             EventSystem.Instance.Publish(clientScene, new EventType.AfterCreateClientScene());
             return clientScene;

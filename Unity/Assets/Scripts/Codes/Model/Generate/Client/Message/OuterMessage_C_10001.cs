@@ -509,9 +509,12 @@ namespace ET
 		public string Message { get; set; }
 
 		[ProtoMember(4)]
-		public string Token { get; set; }
+		public string Address { get; set; }
 
 		[ProtoMember(5)]
+		public string Token { get; set; }
+
+		[ProtoMember(6)]
 		public long AccountId { get; set; }
 
 	}
