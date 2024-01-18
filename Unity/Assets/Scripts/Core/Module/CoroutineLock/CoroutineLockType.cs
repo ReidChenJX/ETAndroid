@@ -11,6 +11,7 @@ namespace ET
         public const int Resources = 6;
         public const int ResourcesLoader = 7;
         public const int LoginAccount = 8;              // 登录协程锁
+        public const int LoadUIBaseWindows = 9;
 
         public const int Max = 100; // 这个必须最大
     }
