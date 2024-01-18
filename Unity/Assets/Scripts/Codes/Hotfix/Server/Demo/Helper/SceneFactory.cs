@@ -53,6 +53,7 @@ namespace ET.Server
                     break;
                 case SceneType.Account:
                     scene.AddComponent<NetServerComponent, IPEndPoint>(startSceneConfig.InnerIPOutPort);
+                    scene.AddComponent<TokenComponent>();
                     break;
             }
 
