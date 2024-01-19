@@ -509,13 +509,28 @@ namespace ET
 		public string Message { get; set; }
 
 		[ProtoMember(4)]
-		public string Address { get; set; }
-
-		[ProtoMember(5)]
 		public string Token { get; set; }
 
-		[ProtoMember(6)]
+		[ProtoMember(5)]
 		public long AccountId { get; set; }
+
+		[ProtoMember(6)]
+		public string Address { get; set; }
+
+		[ProtoMember(7)]
+		public long Key { get; set; }
+
+		[ProtoMember(8)]
+		public long GateId { get; set; }
+
+	}
+
+	[Message(OuterMessage.A2C_Disconnect)]
+	[ProtoContract]
+	public partial class A2C_Disconnect: ProtoObject, IMessage
+	{
+		[ProtoMember(1)]
+		public int Error { get; set; }
 
 	}
 
@@ -557,5 +572,6 @@ namespace ET
 		 public const ushort G2C_Benchmark = 10035;
 		 public const ushort C2A_LoginAccount = 10036;
 		 public const ushort A2C_LoginAccount = 10037;
+		 public const ushort A2C_Disconnect = 10038;
 	}
 }

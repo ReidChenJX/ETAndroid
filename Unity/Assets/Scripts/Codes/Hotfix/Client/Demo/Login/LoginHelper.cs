@@ -73,6 +73,8 @@ namespace ET.Client
                 // session 为路由服务器，由路由服务器转发给登录服务器，并返回网关(gate)服务器地址
                 using (Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress))
                 {
+                    Log.Debug("开始调用C2A_LoginAccount!");
+                    Log.Debug(session.DomainScene().SceneType.ToString());
                     a2cLoginAccount = (A2C_LoginAccount)await session.Call(new C2A_LoginAccount() { AccountName = account, PassWord = password });
                 }
 
@@ -84,7 +86,10 @@ namespace ET.Client
                 clientScene.GetComponent<AccountInfoComponent>().Token = a2cLoginAccount.Token;
                 clientScene.GetComponent<AccountInfoComponent>().AccountId = a2cLoginAccount.AccountId;
 
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
+                    new C2G_LoginGate() { Key = a2cLoginAccount.Key, GateId = a2cLoginAccount.GateId });
 
+                Log.Debug("登陆gate成功!");
             }
             catch (Exception ex) 
             {

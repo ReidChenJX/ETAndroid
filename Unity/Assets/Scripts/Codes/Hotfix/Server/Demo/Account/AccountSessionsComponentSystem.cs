@@ -1,7 +1,7 @@
 ﻿
 namespace ET.Server
 {
-    public class AccountSessionsComponentSystemDestory : DestroySystem<AccountSessionsComponent>
+    public class AccountSessionsComponentDestorySystem : DestroySystem<AccountSessionsComponent>
     {
         protected override void Destroy(AccountSessionsComponent self)
         {
@@ -15,7 +15,7 @@ namespace ET.Server
     [FriendOf(typeof(AccountSessionsComponent))]
     public static class AccountSessionsComponentSystem
     {
-        public static long Get(AccountSessionsComponent self, long accountId)
+        public static long Get(this AccountSessionsComponent self, long accountId)
         {
             if (!self.AccountSessionDictionary.TryGetValue(key: accountId, out long instanceId))
             {
@@ -25,7 +25,7 @@ namespace ET.Server
             return instanceId;
         }
 
-        public static void Add(AccountSessionsComponent self, long accountId, long sessionInstanceId)
+        public static void Add(this AccountSessionsComponent self, long accountId, long sessionInstanceId)
         {
             if (self.AccountSessionDictionary.ContainsKey(key: accountId))
             {
@@ -36,7 +36,7 @@ namespace ET.Server
             self.AccountSessionDictionary.Add(accountId, sessionInstanceId);
         }
 
-        public static void Remove(AccountSessionsComponent self, long accountId)
+        public static void Remove(this AccountSessionsComponent self, long accountId)
         {
             if (self.AccountSessionDictionary.ContainsKey(key: accountId))
             {
