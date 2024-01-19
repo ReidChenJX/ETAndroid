@@ -12,7 +12,7 @@ namespace ET.Client
 
         public static void RegisterUIEvent(this DlgLogin self)
         {
-            self.View.E_LoginButton.onClick.AddListener(self.OnLoginClickHandler);
+            self.View.E_LoginButton.AddListenerAsync(() => { return self.OnLoginClickHandler(); });
         }
 
         public static void ShowWindow(this DlgLogin self, Entity contextData = null)
@@ -21,9 +21,25 @@ namespace ET.Client
 			
         }
 
-        public static void OnLoginClickHandler(this DlgLogin self)
+        public static async ETTask OnLoginClickHandler(this DlgLogin self)
         {
-            LoginHelper.Login(self.ClientScene(), self.View.E_AccountInputField.text, self.View.E_PasswordInputField.text).Coroutine();
+            try
+            {
+                int errorCode =  await LoginHelper.LoginAccount(self.ClientScene(), self.View.E_AccountInputField.text, self.View.E_PasswordInputField.text);
+
+                if(errorCode != ErrorCode.ERR_Success)
+                {
+                    // 登录错误
+                    Log.Error(errorCode.ToString());
+                    return;
+                }
+            }
+            catch(Exception e)
+            {
+                Log.Error(e.ToString());
+                return;
+            }
+            
         }
 		
     }

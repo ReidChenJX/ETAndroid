@@ -93,6 +93,9 @@ namespace ET.Server
 
 
                     }
+                    // 验证成功后，判断该账号是否已经登录
+                    //long accountSessionInstanceId = session.DomainScene().GetComponent<AccountSessionsComponent>().InstanceId;
+
 
                     string token = TimeHelper.ServerNow().ToString() + RandomGenerator.RandomNumber(int.MinValue, int.MaxValue).ToString();
                     session.DomainScene().GetComponent<TokenComponent>().Remove(account.Id);

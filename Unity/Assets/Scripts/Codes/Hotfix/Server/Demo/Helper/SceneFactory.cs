@@ -54,6 +54,7 @@ namespace ET.Server
                 case SceneType.Account:
                     scene.AddComponent<NetServerComponent, IPEndPoint>(startSceneConfig.InnerIPOutPort);
                     scene.AddComponent<TokenComponent>();
+                    scene.AddComponent<AccountSessionsComponent>();
                     break;
             }
 
