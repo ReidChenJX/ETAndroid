@@ -12,7 +12,10 @@ namespace ET.Client
             clientScene.AddComponent<CurrentScenesComponent>();
             clientScene.AddComponent<ObjectWait>();
             clientScene.AddComponent<PlayerComponent>();
-            
+
+            // 自定义组件增加
+            clientScene.AddComponent<AccountInfoComponent>();
+
             EventSystem.Instance.Publish(clientScene, new EventType.AfterCreateClientScene());
             return clientScene;
         }

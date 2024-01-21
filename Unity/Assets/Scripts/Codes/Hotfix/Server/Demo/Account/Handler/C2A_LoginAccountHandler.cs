@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace ET.Server
 {
-    [MessageHandler(SceneType.Realm)]
+    [MessageHandler(SceneType.Account)]
     public class C2A_LoginAccountHandler : AMRpcHandler<C2A_LoginAccount, A2C_LoginAccount>
     {
         protected override async ETTask Run(Session session, C2A_LoginAccount request, A2C_LoginAccount response)
@@ -61,10 +61,11 @@ namespace ET.Server
                     {
                         // 数据库验证
                         var accountInfoList = await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Query<Account>(d => d.AccountName.Equals(request.AccountName.Trim()));
-
+                        Log.Debug(accountInfoList.ToString());
+                        Log.Debug(accountInfoList.Count.ToString());
                         Account account = null;
 
-                        if (accountInfoList != null || accountInfoList.Count > 0)
+                        if (accountInfoList != null && accountInfoList.Count > 0)
                         {
                             account = accountInfoList[0];
                             session.AddChild(account);
@@ -87,18 +88,19 @@ namespace ET.Server
                         }
                         else
                         {
-                            // 数据库无数据，自动创建。
+                            Log.Debug("数据库无数据，自动创建。");
                             // Session 也是组件，新建的account 需要挂载在其下，用于记录，入库账户信息
                             account = session.AddChild<Account>();
                             account.AccountName = request.AccountName.Trim();
                             account.PassWord = request.PassWord.Trim();
                             account.CreateTime = TimeHelper.ServerNow();
                             account.AccountType = (int)AccountType.General;
+                            Log.Debug(account.ToString());
 
                             // 数据入库
                             await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Save<Account>(account);
 
-
+                            Log.Debug("数据入库成功");
                         }
 
                         if(response.Error == ErrorCode.ERR_Success)

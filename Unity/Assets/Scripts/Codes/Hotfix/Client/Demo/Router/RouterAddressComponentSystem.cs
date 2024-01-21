@@ -69,8 +69,12 @@ namespace ET.Client
         
         public static IPEndPoint GetRealmAddress(this RouterAddressComponent self, string account)
         {
+            // session 的请求地址以及对应地址的Scene Type 由address 决定，在Excel中维护
             int v = account.Mode(self.Info.Realms.Count);
             string address = self.Info.Realms[v];
+
+            // 自定义 Realm地址，由Realm服务器改为Account服务器
+            address = "127.0.0.1:30005";
             string[] ss = address.Split(':');
             IPAddress ipAddress = IPAddress.Parse(ss[0]);
             //if (self.IPAddress.AddressFamily == AddressFamily.InterNetworkV6)

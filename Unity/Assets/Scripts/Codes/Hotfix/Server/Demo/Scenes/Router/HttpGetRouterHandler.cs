@@ -13,6 +13,7 @@ namespace ET.Server
             HttpGetRouterResponse response = new HttpGetRouterResponse();
             response.Realms = new List<string>();
             response.Routers = new List<string>();
+            // 获取 Realm 的地址
             foreach (StartSceneConfig startSceneConfig in StartSceneConfigCategory.Instance.Realms)
             {
                 response.Realms.Add(startSceneConfig.InnerIPOutPort.ToString());

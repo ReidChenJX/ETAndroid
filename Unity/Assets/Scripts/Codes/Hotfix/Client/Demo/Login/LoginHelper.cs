@@ -8,6 +8,7 @@ namespace ET.Client
     {
         public static async ETTask Login(Scene clientScene, string account, string password)
         {
+            
             try
             {
                 // 创建一个ETModel层的Session
@@ -23,7 +24,7 @@ namespace ET.Client
                 }
                 IPEndPoint realmAddress = routerAddressComponent.GetRealmAddress(account);
 
-                R2C_Login r2CLogin;
+                R2C_Login r2CLogin = null;
                 using (Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress))
                 {
                     r2CLogin = (R2C_Login)await session.Call(new C2R_Login() { Account = account, Password = password });
@@ -44,8 +45,6 @@ namespace ET.Client
             {
                 Log.Error(e);
             }
-
-            
         } 
 
         public static async ETTask<int> LoginAccount(Scene clientScene, string account, string password)
@@ -67,6 +66,7 @@ namespace ET.Client
                     clientScene.AddComponent<NetClientComponent, AddressFamily>(routerAddressComponent.RouterManagerIPAddress.AddressFamily);
                 }
                 // 登录验证服务器地址
+                // 验证服务器类型由 GetRealmAddress 中使用的IP地址决定
                 IPEndPoint realmAddress = routerAddressComponent.GetRealmAddress(account);
 
                 // 登录验证
