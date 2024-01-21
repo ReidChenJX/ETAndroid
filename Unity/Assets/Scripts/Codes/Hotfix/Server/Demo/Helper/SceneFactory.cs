@@ -51,10 +51,15 @@ namespace ET.Server
                 case SceneType.BenchmarkClient:
                     scene.AddComponent<BenchmarkClientComponent>();
                     break;
+                // 自定义服务器
                 case SceneType.Account:
                     scene.AddComponent<NetServerComponent, IPEndPoint>(startSceneConfig.InnerIPOutPort);
                     scene.AddComponent<TokenComponent>();
                     scene.AddComponent<AccountSessionsComponent>();
+                    break;
+                case SceneType.LoginCenter:
+                    scene.AddComponent<LoginInfoRecordComponent>();
+
                     break;
             }
 

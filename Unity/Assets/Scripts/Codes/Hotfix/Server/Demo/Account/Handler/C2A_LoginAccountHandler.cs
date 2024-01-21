@@ -93,7 +93,6 @@ namespace ET.Server
                             account.PassWord = request.PassWord.Trim();
                             account.CreateTime = TimeHelper.ServerNow();
                             account.AccountType = (int)AccountType.General;
-                            Log.Debug(account.ToString());
 
                             // 数据入库
                             await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Save<Account>(account);
@@ -104,7 +103,23 @@ namespace ET.Server
                         if(response.Error == ErrorCode.ERR_Success)
                         {
                             Log.Debug("ErrorCode.ERR_Success: 验证成功后，判断该账号是否已经登录");
-                            // 验证成功后，判断该账号是否已经登录
+                            // 验证成功后，判断该账号是否已在账户中心服务器
+                            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), "LoginCenter");
+                            long longCenterInstanceId = startSceneConfig.InstanceId;
+                            var loginAccountRespone = (L2A_LoginAccountResponse)await ActorMessageSenderComponent.Instance.Call(
+                                longCenterInstanceId, new A2L_LoginAccountRequest() { AccountId = account.Id });
+
+                            if(loginAccountRespone.Error != ErrorCode.ERR_Success)
+                            {
+                                response.Error = ErrorCode.ERR_LoginInfoError;
+                                session.Disconnect().Coroutine();
+                                account?.Dispose();
+                                return;
+                            }
+
+
+
+                            // 判断该账号是否已在登录服务器
                             long accountSessionInstanceId = session.DomainScene().GetComponent<AccountSessionsComponent>().Get(account.Id);
                             Session otherSession = Root.Instance.Get(accountSessionInstanceId) as Session;
 
@@ -141,8 +156,6 @@ namespace ET.Server
                     }
                 }
             }
-
-            
         }
     }
 }

@@ -170,3 +170,16 @@ message M2M_UnitTransferResponse // IActorResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+//ResponseType L2A_LoginAccountResponse
+message A2L_LoginAccountRequest // IActorRequest
+{
+	int32 RpcId = 1;
+	int64 AccountId = 2;
+}
+
+message L2A_LoginAccountResponse // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

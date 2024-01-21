@@ -360,6 +360,34 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(L2A_LoginAccountResponse))]
+	[Message(InnerMessage.A2L_LoginAccountRequest)]
+	[ProtoContract]
+	public partial class A2L_LoginAccountRequest: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long AccountId { get; set; }
+
+	}
+
+	[Message(InnerMessage.L2A_LoginAccountResponse)]
+	[ProtoContract]
+	public partial class L2A_LoginAccountResponse: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -385,5 +413,7 @@ namespace ET
 		 public const ushort ObjectQueryResponse = 20022;
 		 public const ushort M2M_UnitTransferRequest = 20023;
 		 public const ushort M2M_UnitTransferResponse = 20024;
+		 public const ushort A2L_LoginAccountRequest = 20025;
+		 public const ushort L2A_LoginAccountResponse = 20026;
 	}
 }
