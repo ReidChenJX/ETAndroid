@@ -74,7 +74,7 @@ namespace ET.Client
                 using (Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress))
                 {
                     Log.Debug("开始调用C2A_LoginAccount!");
-                    Log.Debug(session.DomainScene().SceneType.ToString());
+                    password = MD5Helper.StringMD5(password);
                     a2cLoginAccount = (A2C_LoginAccount)await session.Call(new C2A_LoginAccount() { AccountName = account, PassWord = password });
                 }
 
@@ -82,6 +82,8 @@ namespace ET.Client
                 Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(a2cLoginAccount.Address));
                 // gate Session 挂载至客户端，后续消息由gate 进行转发
                 clientScene.AddComponent<SessionComponent>().Session = gateSession;
+                // 心跳检测
+                clientScene.GetComponent<SessionComponent>().Session.AddComponent<PingComponent>();
 
                 clientScene.GetComponent<AccountInfoComponent>().Token = a2cLoginAccount.Token;
                 clientScene.GetComponent<AccountInfoComponent>().AccountId = a2cLoginAccount.AccountId;

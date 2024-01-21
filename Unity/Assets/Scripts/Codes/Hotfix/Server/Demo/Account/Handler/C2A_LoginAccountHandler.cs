@@ -61,8 +61,6 @@ namespace ET.Server
                     {
                         // 数据库验证
                         var accountInfoList = await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Query<Account>(d => d.AccountName.Equals(request.AccountName.Trim()));
-                        Log.Debug(accountInfoList.ToString());
-                        Log.Debug(accountInfoList.Count.ToString());
                         Account account = null;
 
                         if (accountInfoList != null && accountInfoList.Count > 0)
@@ -126,7 +124,7 @@ namespace ET.Server
                             Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
 
                             G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await ActorMessageSenderComponent.Instance.Call(
-                        config.InstanceId, new R2G_GetLoginKey() { Account = request.AccountName });
+                                config.InstanceId, new R2G_GetLoginKey() { Account = request.AccountName });
 
                             response.Address = config.InnerIPOutPort.ToString();
                             response.Key = g2RGetLoginKey.Key;
