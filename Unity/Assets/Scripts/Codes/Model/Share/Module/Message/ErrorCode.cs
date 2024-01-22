@@ -18,6 +18,8 @@ namespace ET
         public const int ERR_PasswordFormError = 200004;        // 密码格式错误
         public const int ERR_AccountBlackListError = 200005;    // 账户处于黑名单
         public const int ERR_RequestRespeated = 200006;         // 多次登录
+        public const int ERR_ExtraAccount = 200007;             // 登录服务器已存在账号
+        public const int ERR_ExtraLoginCenter = 200008;         // 账户中心服务器已存在账号
 
     }
 }

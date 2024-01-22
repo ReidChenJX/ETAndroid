@@ -53,9 +53,12 @@ namespace ET.Client
 
             try
             {
+                clientScene.RemoveComponent<RouterAddressComponent>();
+                clientScene.RemoveComponent<NetClientComponent>();
+
+                clientScene.RemoveComponent<SessionComponent>();
                 // ET 7.2 增加路由session，由路由层获取登录服务器地址，由此可见登录服务器可多个
                 // 创建一个ETModel层的Session
-                clientScene.RemoveComponent<RouterAddressComponent>();
                 // 获取路由跟realmDispatcher地址
                 RouterAddressComponent routerAddressComponent = clientScene.GetComponent<RouterAddressComponent>();
                 if (routerAddressComponent == null)
@@ -74,16 +77,17 @@ namespace ET.Client
                 using (Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress))
                 {
                     Log.Debug("开始调用C2A_LoginAccount!");
-                    password = MD5Helper.StringMD5(password);
                     a2cLoginAccount = (A2C_LoginAccount)await session.Call(new C2A_LoginAccount() { AccountName = account, PassWord = password });
+                }
+                if(a2cLoginAccount.Error != ErrorCode.ERR_Success)
+                {
+                    return a2cLoginAccount.Error;
                 }
 
                 // gate Session
                 Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(a2cLoginAccount.Address));
                 // gate Session 挂载至客户端，后续消息由gate 进行转发
                 clientScene.AddComponent<SessionComponent>().Session = gateSession;
-                // 心跳检测
-                clientScene.GetComponent<SessionComponent>().Session.AddComponent<PingComponent>();
 
                 clientScene.GetComponent<AccountInfoComponent>().Token = a2cLoginAccount.Token;
                 clientScene.GetComponent<AccountInfoComponent>().AccountId = a2cLoginAccount.AccountId;

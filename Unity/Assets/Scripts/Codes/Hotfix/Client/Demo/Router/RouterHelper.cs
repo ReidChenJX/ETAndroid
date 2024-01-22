@@ -19,6 +19,7 @@ namespace ET.Client
             Log.Info($"get router: {recvLocalConn} {routerAddress}");
 
             Session routerSession = clientScene.GetComponent<NetClientComponent>().Create(routerAddress, address, recvLocalConn);
+            // 心跳检测
             routerSession.AddComponent<PingComponent>();
             routerSession.AddComponent<RouterCheckComponent>();
             
