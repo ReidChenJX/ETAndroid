@@ -133,7 +133,7 @@ namespace ET.Server
                     session.AddComponent<AccountCheckOutTimeComponent, long>(account.Id);
 
                     // 验证通过，获取Gate信息
-                    StartSceneConfig config = RealmGateAddressHelper.GetGate(session.DomainZone());
+                    StartSceneConfig config = RealmGateAddressHelper.GetGate(session.DomainZone(), account.Id);
                     Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
 
                     G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await ActorMessageSenderComponent.Instance.Call(

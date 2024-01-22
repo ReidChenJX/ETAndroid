@@ -534,6 +534,55 @@ namespace ET
 
 	}
 
+	[Message(OuterMessage.ServerInfoProto)]
+	[ProtoContract]
+	public partial class ServerInfoProto: ProtoObject
+	{
+		[ProtoMember(1)]
+		public int Id { get; set; }
+
+		[ProtoMember(2)]
+		public int Status { get; set; }
+
+		[ProtoMember(3)]
+		public string ServerName { get; set; }
+
+	}
+
+	[ResponseType(nameof(A2C_GetServerInfo))]
+	[Message(OuterMessage.C2A_GetServerInfo)]
+	[ProtoContract]
+	public partial class C2A_GetServerInfo: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string Token { get; set; }
+
+		[ProtoMember(3)]
+		public long AccountId { get; set; }
+
+	}
+
+	[Message(OuterMessage.A2C_GetServerInfo)]
+	[ProtoContract]
+	public partial class A2C_GetServerInfo: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public List<ServerInfoProto> ServerInfoList { get; set; }
+
+	}
+
 	public static class OuterMessage
 	{
 		 public const ushort HttpGetRouterResponse = 10002;
@@ -573,5 +622,8 @@ namespace ET
 		 public const ushort C2A_LoginAccount = 10036;
 		 public const ushort A2C_LoginAccount = 10037;
 		 public const ushort A2C_Disconnect = 10038;
+		 public const ushort ServerInfoProto = 10039;
+		 public const ushort C2A_GetServerInfo = 10040;
+		 public const ushort A2C_GetServerInfo = 10041;
 	}
 }

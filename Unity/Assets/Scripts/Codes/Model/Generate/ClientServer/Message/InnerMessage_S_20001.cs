@@ -388,6 +388,34 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(G2L_DisconnectGateUnit))]
+	[Message(InnerMessage.L2G_DisconnectGateUnit)]
+	[ProtoContract]
+	public partial class L2G_DisconnectGateUnit: ProtoObject, IActorRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public long AccountId { get; set; }
+
+	}
+
+	[Message(InnerMessage.G2L_DisconnectGateUnit)]
+	[ProtoContract]
+	public partial class G2L_DisconnectGateUnit: ProtoObject, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 	public static class InnerMessage
 	{
 		 public const ushort ObjectQueryRequest = 20002;
@@ -415,5 +443,7 @@ namespace ET
 		 public const ushort M2M_UnitTransferResponse = 20024;
 		 public const ushort A2L_LoginAccountRequest = 20025;
 		 public const ushort L2A_LoginAccountResponse = 20026;
+		 public const ushort L2G_DisconnectGateUnit = 20027;
+		 public const ushort G2L_DisconnectGateUnit = 20028;
 	}
 }

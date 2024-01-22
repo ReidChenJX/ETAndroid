@@ -33,6 +33,12 @@ namespace ET.Client
                     Log.Error(errorCode.ToString());
                     return;
                 }
+
+                // TODO 显示登录后的UI界面
+                self.DomainScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Login);
+                self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Lobby);
+
+
             }
             catch(Exception e)
             {

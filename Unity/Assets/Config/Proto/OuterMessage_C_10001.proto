@@ -254,10 +254,35 @@ message A2C_LoginAccount // IResponse
 	string Address = 6;		// Address Key GateId 支持登录Gate服务器
 	int64 Key = 7;
 	int64 GateId = 8;
-
 }
 
 message A2C_Disconnect // IMessage
 {
 	int32 Error = 1;
+}
+
+
+message ServerInfoProto
+{
+	int32 Id = 1;
+	int32 Status = 2;
+	string ServerName = 3;
+}
+
+
+//ResponseType A2C_GetServerInfo
+message C2A_GetServerInfo // IRequest
+{
+	int32 RpcId = 1;
+	string Token = 2;
+	int64 AccountId = 3;
+
+}
+
+message A2C_GetServerInfo // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated ServerInfoProto ServerInfoList = 4;
 }
