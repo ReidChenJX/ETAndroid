@@ -15,6 +15,7 @@ namespace ET.Client
 
             // 自定义组件增加
             clientScene.AddComponent<AccountInfoComponent>();
+            clientScene.AddComponent<ServerInfoComponent>();
 
             EventSystem.Instance.Publish(clientScene, new EventType.AfterCreateClientScene());
             return clientScene;

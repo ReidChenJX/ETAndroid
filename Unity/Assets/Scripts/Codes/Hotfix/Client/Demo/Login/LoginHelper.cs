@@ -113,5 +113,46 @@ namespace ET.Client
             return ErrorCode.ERR_Success;
             
         }
+
+
+        // 获取服务器列表
+        public static async ETTask<int> GetServerInfos(Scene clientScene)
+        {
+            A2C_GetServerInfo a2cGetServerInfo = null;
+
+            try
+            {
+                a2cGetServerInfo = (A2C_GetServerInfo)await clientScene.GetComponent<SessionComponent>().Session.Call(new C2A_GetServerInfo()
+                {
+                    AccountId = clientScene.GetComponent<AccountInfoComponent>().AccountId,
+                    Token = clientScene.GetComponent<AccountInfoComponent>().Token
+                }); 
+
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+            }
+
+            // 服务器信息获取返回
+            if(a2cGetServerInfo.Error != ErrorCode.ERR_Success)
+            {
+                return a2cGetServerInfo.Error;
+            }
+
+            // clinet ServerInfoComponent 记录 a2cGetServerInfo 中的 ServerInfoProto
+            foreach (var serverPorto in a2cGetServerInfo.ServerInfoList)
+            {
+                ServerInfo serverInfo = clientScene.GetComponent<ServerInfoComponent>().AddChild<ServerInfo>();
+                serverInfo.FromMessage(serverPorto);
+                clientScene.GetComponent<ServerInfoComponent>().Add(serverInfo);
+            }
+
+
+            await ETTask.CompletedTask;
+            return ErrorCode.ERR_Success;
+            
+        }
     }
 }
