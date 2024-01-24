@@ -9,10 +9,10 @@ namespace ET.Server
     [ChildOfAttribute]
     public class Account: Entity, IAwake
     {
-        public string AccountName { get; set; }         // Account µÇÂ¼Ãû
-        public string PassWord { get; set; }            // ÃÜÂë
-        public long CreateTime { get; set; }            // ´´½¨Ê±¼ä
-        public int AccountType { get; set; }            // ÕË»§ÀàĞÍ
+        public string AccountName { get; set; }         // Account ç™»å½•å
+        public string PassWord { get; set; }            // å¯†ç 
+        public long CreateTime { get; set; }            // åˆ›å»ºæ—¶é—´
+        public int AccountType { get; set; }            // è´¦æˆ·ç±»å‹
 
     }
 

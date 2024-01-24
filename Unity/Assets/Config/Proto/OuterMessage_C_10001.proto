@@ -286,3 +286,35 @@ message A2C_GetServerInfo // IResponse
 	string Message = 3;
 	repeated ServerInfoProto ServerInfoList = 4;
 }
+
+
+message RoleInfoProto
+{
+	int32 Id = 1;
+	string Name = 2;
+	int32 State = 3;
+	int64 AccountId = 4;
+	int64 LastLoginTime = 5;
+	int64 CreateTime = 6;
+	int32 ServerId = 7;
+}
+
+
+//ResponseType A2C_CreateRole
+message C2A_CreateRole // IRequest
+{
+	int32 RpcId = 1;
+	string Token = 2;
+	int64 AccountId = 3;
+	string Name = 4;
+	int32 ServerId = 5;
+	
+}
+
+message A2C_CreateRole // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	RoleInfoProto RoleInfo = 4;
+}

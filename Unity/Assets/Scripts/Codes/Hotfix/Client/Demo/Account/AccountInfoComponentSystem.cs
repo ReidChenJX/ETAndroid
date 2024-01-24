@@ -10,7 +10,7 @@ namespace ET.Client
         }
     }
 
-
+    [FriendOf(typeof(AccountInfoComponent))]
     public static class  AccountInfoComponetSystem
     {
 

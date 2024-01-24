@@ -20,6 +20,12 @@ namespace ET
         public const int ERR_RequestRespeated = 200006;         // 多次登录
         public const int ERR_ExtraAccount = 200007;             // 登录服务器已存在账号
         public const int ERR_ExtraLoginCenter = 200008;         // 账户中心服务器已存在账号
+        public const int ERR_TokenError = 200009;               // Token 验证错误
+        
+        // Role 错误
+        public const int ERR_RoleNameNull = 200010;             // Role Name 字段为空
+        public const int ERR_RoleNameSame = 200011;             // Role 重复
+
 
     }
 }

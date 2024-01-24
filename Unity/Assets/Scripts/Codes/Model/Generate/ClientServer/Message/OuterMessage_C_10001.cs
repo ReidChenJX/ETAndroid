@@ -583,6 +583,73 @@ namespace ET
 
 	}
 
+	[Message(OuterMessage.RoleInfoProto)]
+	[ProtoContract]
+	public partial class RoleInfoProto: ProtoObject
+	{
+		[ProtoMember(1)]
+		public int Id { get; set; }
+
+		[ProtoMember(2)]
+		public string Name { get; set; }
+
+		[ProtoMember(3)]
+		public int State { get; set; }
+
+		[ProtoMember(4)]
+		public long AccountId { get; set; }
+
+		[ProtoMember(5)]
+		public long LastLoginTime { get; set; }
+
+		[ProtoMember(6)]
+		public long CreateTime { get; set; }
+
+		[ProtoMember(7)]
+		public int ServerId { get; set; }
+
+	}
+
+	[ResponseType(nameof(A2C_CreateRole))]
+	[Message(OuterMessage.C2A_CreateRole)]
+	[ProtoContract]
+	public partial class C2A_CreateRole: ProtoObject, IRequest
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public string Token { get; set; }
+
+		[ProtoMember(3)]
+		public long AccountId { get; set; }
+
+		[ProtoMember(4)]
+		public string Name { get; set; }
+
+		[ProtoMember(5)]
+		public int ServerId { get; set; }
+
+	}
+
+	[Message(OuterMessage.A2C_CreateRole)]
+	[ProtoContract]
+	public partial class A2C_CreateRole: ProtoObject, IResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+		[ProtoMember(4)]
+		public RoleInfoProto RoleInfo { get; set; }
+
+	}
+
 	public static class OuterMessage
 	{
 		 public const ushort HttpGetRouterResponse = 10002;
@@ -625,5 +692,8 @@ namespace ET
 		 public const ushort ServerInfoProto = 10039;
 		 public const ushort C2A_GetServerInfo = 10040;
 		 public const ushort A2C_GetServerInfo = 10041;
+		 public const ushort RoleInfoProto = 10042;
+		 public const ushort C2A_CreateRole = 10043;
+		 public const ushort A2C_CreateRole = 10044;
 	}
 }

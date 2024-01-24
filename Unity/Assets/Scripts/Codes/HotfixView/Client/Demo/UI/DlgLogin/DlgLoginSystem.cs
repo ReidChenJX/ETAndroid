@@ -25,7 +25,10 @@ namespace ET.Client
         {
             try
             {
-                int errorCode =  await LoginHelper.LoginAccount(self.ClientScene(), self.View.E_AccountInputField.text, self.View.E_PasswordInputField.text);
+                int errorCode =  await LoginHelper.LoginAccount(
+                    self.ClientScene(), 
+                    self.View.E_AccountInputField.text, 
+                    self.View.E_PasswordInputField.text);
 
                 if(errorCode != ErrorCode.ERR_Success)
                 {
@@ -33,20 +36,20 @@ namespace ET.Client
                     Log.Error(errorCode.ToString());
                     return;
                 }
-
+                
+                // 获取区服信息
+                errorCode = await LoginHelper.GetServerInfos(self.ClientScene());
+                
                 // TODO 显示登录后的UI界面
                 self.DomainScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Login);
                 self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Lobby);
-
-
+                
             }
             catch(Exception e)
             {
                 Log.Error(e.ToString());
                 return;
             }
-            
         }
-		
     }
 }

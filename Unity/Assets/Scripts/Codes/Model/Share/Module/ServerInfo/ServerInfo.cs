@@ -9,8 +9,8 @@
     [ChildOf]
     public class ServerInfo : Entity, IAwake
     {
-        public int Status;
-        public string ServerName;
+        public int Status { get; set; }
+        public string ServerName { get; set; }
     }
 }
     

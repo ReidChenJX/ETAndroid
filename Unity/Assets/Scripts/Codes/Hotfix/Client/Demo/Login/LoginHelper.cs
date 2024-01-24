@@ -115,7 +115,7 @@ namespace ET.Client
         }
 
 
-        // 获取服务器列表
+        // 获取区服服务器列表
         public static async ETTask<int> GetServerInfos(Scene clientScene)
         {
             A2C_GetServerInfo a2cGetServerInfo = null;
@@ -135,7 +135,7 @@ namespace ET.Client
                 Log.Error(ex.ToString());
             }
 
-            // 服务器信息获取返回
+            // 区服服务器信息获取返回
             if(a2cGetServerInfo.Error != ErrorCode.ERR_Success)
             {
                 return a2cGetServerInfo.Error;
@@ -153,6 +153,45 @@ namespace ET.Client
             await ETTask.CompletedTask;
             return ErrorCode.ERR_Success;
             
+        }
+        
+        // Role 创建
+        public static async ETTask<int> CreateRole(Scene clientScene, string name)
+        {
+
+            A2C_CreateRole a2CCreateRole = null;
+
+            try
+            {
+                a2CCreateRole = (A2C_CreateRole)await clientScene.GetComponent<SessionComponent>().Session.Call(new C2A_CreateRole()
+                {
+                    AccountId = clientScene.GetComponent<AccountInfoComponent>().AccountId,
+                    Token = clientScene.GetComponent<AccountInfoComponent>().Token,
+                    Name = name,
+                    ServerId = clientScene.GetComponent<ServerInfoComponent>().CurrentServerId
+                });
+                
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.ToString());
+                
+            }
+
+            if (a2CCreateRole.Error != ErrorCode.ERR_Success)
+            {
+                Log.Error(a2CCreateRole.Error.ToString());
+                return a2CCreateRole.Error;
+            }
+            // 记录 角色选择信息
+            RoleInfo newRoleInfo = clientScene.GetComponent<RoleInfoComponent>().AddChild<RoleInfo>();
+            newRoleInfo.FromMessage(a2CCreateRole.RoleInfo);
+
+            clientScene.GetComponent<RoleInfoComponent>().RoleInfos.Add(newRoleInfo);
+            
+            
+
+            return a2CCreateRole.Error;
         }
     }
 }

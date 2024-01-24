@@ -1,5 +1,5 @@
 ﻿
-namespace ET
+namespace ET.Client
 {
     public class ServerInfoComponentDestroySystem : DestroySystem<ServerInfoComponent>
     {
