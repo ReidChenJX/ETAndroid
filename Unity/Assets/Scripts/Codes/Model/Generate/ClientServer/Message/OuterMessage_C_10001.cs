@@ -514,15 +514,6 @@ namespace ET
 		[ProtoMember(5)]
 		public long AccountId { get; set; }
 
-		[ProtoMember(6)]
-		public string Address { get; set; }
-
-		[ProtoMember(7)]
-		public long Key { get; set; }
-
-		[ProtoMember(8)]
-		public long GateId { get; set; }
-
 	}
 
 	[Message(OuterMessage.A2C_Disconnect)]
@@ -588,7 +579,7 @@ namespace ET
 	public partial class RoleInfoProto: ProtoObject
 	{
 		[ProtoMember(1)]
-		public int Id { get; set; }
+		public long Id { get; set; }
 
 		[ProtoMember(2)]
 		public string Name { get; set; }

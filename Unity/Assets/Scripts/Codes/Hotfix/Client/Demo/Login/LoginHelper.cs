@@ -74,28 +74,29 @@ namespace ET.Client
 
                 // 登录验证
                 // session 为路由服务器，由路由服务器转发给登录服务器，并返回网关(gate)服务器地址
-                using (Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress))
-                {
-                    Log.Debug("开始调用C2A_LoginAccount!");
-                    a2cLoginAccount = (A2C_LoginAccount)await session.Call(new C2A_LoginAccount() { AccountName = account, PassWord = password });
-                }
+                Session session = await RouterHelper.CreateRouterSession(clientScene, realmAddress);
+                
+                Log.Debug("开始调用C2A_LoginAccount!");
+                a2cLoginAccount = (A2C_LoginAccount)await session.Call(new C2A_LoginAccount() { AccountName = account, PassWord = password });
+                
                 if(a2cLoginAccount.Error != ErrorCode.ERR_Success)
                 {
                     return a2cLoginAccount.Error;
                 }
-
-                // gate Session
-                Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(a2cLoginAccount.Address));
-                // gate Session 挂载至客户端，后续消息由gate 进行转发
-                clientScene.AddComponent<SessionComponent>().Session = gateSession;
-
+                
+                clientScene.AddComponent<SessionComponent>().Session = session;
                 clientScene.GetComponent<AccountInfoComponent>().Token = a2cLoginAccount.Token;
                 clientScene.GetComponent<AccountInfoComponent>().AccountId = a2cLoginAccount.AccountId;
 
-                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
-                    new C2G_LoginGate() { Key = a2cLoginAccount.Key, GateId = a2cLoginAccount.GateId });
-
-                Log.Debug("登陆gate成功!");
+                // gate Session
+                //Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(a2cLoginAccount.Address));
+                // gate Session 挂载至客户端，后续消息由gate 进行转发
+                // clientScene.AddComponent<SessionComponent>().Session = gateSession;
+                
+                // G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
+                //     new C2G_LoginGate() { Key = a2cLoginAccount.Key, GateId = a2cLoginAccount.GateId });
+                //
+                // Log.Debug("登陆gate成功!");
             }
             catch (Exception ex) 
             {
@@ -103,8 +104,6 @@ namespace ET.Client
 
             }
             
-
-
             // 登录返回
             if(a2cLoginAccount.Error != ErrorCode.ERR_Success)
             {
@@ -119,7 +118,8 @@ namespace ET.Client
         public static async ETTask<int> GetServerInfos(Scene clientScene)
         {
             A2C_GetServerInfo a2cGetServerInfo = null;
-
+            
+            // clientScene 为 Account
             try
             {
                 a2cGetServerInfo = (A2C_GetServerInfo)await clientScene.GetComponent<SessionComponent>().Session.Call(new C2A_GetServerInfo()
@@ -171,6 +171,8 @@ namespace ET.Client
                     ServerId = clientScene.GetComponent<ServerInfoComponent>().CurrentServerId
                 });
                 
+                
+                
             }
             catch (Exception e)
             {
@@ -188,8 +190,8 @@ namespace ET.Client
             newRoleInfo.FromMessage(a2CCreateRole.RoleInfo);
 
             clientScene.GetComponent<RoleInfoComponent>().RoleInfos.Add(newRoleInfo);
-            
-            
+            clientScene.GetComponent<RoleInfoComponent>().CurrentRoleId = newRoleInfo.Id;
+            Log.Debug($"当前自动创建并获取的角色{newRoleInfo.Id}");
 
             return a2CCreateRole.Error;
         }

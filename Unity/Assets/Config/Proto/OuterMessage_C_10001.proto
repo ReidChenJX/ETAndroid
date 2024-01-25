@@ -251,9 +251,6 @@ message A2C_LoginAccount // IResponse
 	string Message = 3;
 	string Token = 4;		// Token AccountId 支持 AccountInfoComponent
 	int64 AccountId = 5;
-	string Address = 6;		// Address Key GateId 支持登录Gate服务器
-	int64 Key = 7;
-	int64 GateId = 8;
 }
 
 message A2C_Disconnect // IMessage
@@ -290,7 +287,7 @@ message A2C_GetServerInfo // IResponse
 
 message RoleInfoProto
 {
-	int32 Id = 1;
+	int64 Id = 1;
 	string Name = 2;
 	int32 State = 3;
 	int64 AccountId = 4;

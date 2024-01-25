@@ -114,9 +114,7 @@ namespace ET.Server
                         account?.Dispose();
                         return;
                     }
-
-
-
+                    
                     // 判断该账号是否已在登录服务器
                     long accountSessionInstanceId = session.DomainScene().GetComponent<AccountSessionsComponent>().Get(account.Id);
                     Session otherSession = Root.Instance.Get(accountSessionInstanceId) as Session;
@@ -132,16 +130,16 @@ namespace ET.Server
                     // 登录请求持续一定时间后，自动断开
                     session.AddComponent<AccountCheckOutTimeComponent, long>(account.Id);
 
-                    // 验证通过，获取Gate信息
-                    StartSceneConfig config = RealmGateAddressHelper.GetGate(session.DomainZone(), account.Id);
-                    Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
-
-                    G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await ActorMessageSenderComponent.Instance.Call(
-                        config.InstanceId, new R2G_GetLoginKey() { Account = request.AccountName });
-
-                    response.Address = config.InnerIPOutPort.ToString();
-                    response.Key = g2RGetLoginKey.Key;
-                    response.GateId = g2RGetLoginKey.GateId;
+                    // 验证通过，获取Gate信息   Gate 数据暂时不返回，Role 创建成功后再选定 Gate
+                    // StartSceneConfig config = RealmGateAddressHelper.GetGate(session.DomainZone(), account.Id);
+                    // Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
+                    //
+                    // G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await ActorMessageSenderComponent.Instance.Call(
+                    //     config.InstanceId, new R2G_GetLoginKey() { Account = request.AccountName });
+                    //
+                    // response.Address = config.InnerIPOutPort.ToString();
+                    // response.Key = g2RGetLoginKey.Key;
+                    // response.GateId = g2RGetLoginKey.GateId;
 
                     string token = TimeHelper.ServerNow().ToString() + RandomGenerator.RandomNumber(int.MinValue, int.MaxValue).ToString();
                     session.DomainScene().GetComponent<TokenComponent>().Remove(account.Id);

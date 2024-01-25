@@ -15,6 +15,7 @@ namespace ET
 
         public static ServerInfoProto ToMessage(this ServerInfo self)
         {
+            Log.Debug("ServerInfoProto ToMessage");
             return new ServerInfoProto()
             {
                 Id = (int)self.Id, 

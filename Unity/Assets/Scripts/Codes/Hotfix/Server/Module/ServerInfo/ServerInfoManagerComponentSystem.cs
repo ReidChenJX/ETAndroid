@@ -70,11 +70,6 @@ namespace ET.Server
                 
             }
         }
-
-        public static List<ServerInfo> GetServerInfos(this ServerInfoManagerComponent self)
-        {
-            return self.ServerInfos;
-        }
     
     }
 }

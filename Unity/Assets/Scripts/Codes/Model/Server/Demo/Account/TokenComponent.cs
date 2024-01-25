@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ET.Server
 {
-    // ÓÃ»§·şÎñÆ÷¶Ë´æ´¢ÒÑÁ¬½Ó¿Í»§¶ËµÄ Token
+    // ç”¨æˆ·æœåŠ¡å™¨ç«¯å­˜å‚¨å·²è¿æ¥å®¢æˆ·ç«¯çš„ Token
     [ComponentOfAttribute]
     public class TokenComponent:Entity, IAwake
     {

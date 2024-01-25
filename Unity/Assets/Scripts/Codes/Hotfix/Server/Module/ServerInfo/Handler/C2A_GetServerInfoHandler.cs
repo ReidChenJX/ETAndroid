@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ET.Server
 {
     [MessageHandler(SceneType.Account)]
@@ -17,12 +19,14 @@ namespace ET.Server
             }
             
             // 区服服务器信息返回
-
-            foreach (var serverInfo in session.DomainScene().GetComponent<ServerInfoManagerComponent>().GetServerInfos())
+            List<ServerInfoProto> serverInfoProto = new List<ServerInfoProto>();
+            foreach (var serverInfo in session.DomainScene().GetComponent<ServerInfoManagerComponent>().ServerInfos)
             {
-                response.ServerInfoList.Add(serverInfo.ToMessage());
+                serverInfoProto.Add(serverInfo.ToMessage());
+                Log.Debug("foreach success");
             }
 
+            response.ServerInfoList = serverInfoProto;
             await ETTask.CompletedTask;
 
         }

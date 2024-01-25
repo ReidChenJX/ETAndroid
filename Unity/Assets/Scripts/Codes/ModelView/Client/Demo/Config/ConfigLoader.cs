@@ -38,6 +38,8 @@ namespace ET.Client
                     "StartProcessConfigCategory", 
                     "StartSceneConfigCategory", 
                     "StartZoneConfigCategory",
+                    "ServerInfoConfigCategory"
+                    
                 };
                 foreach (Type configType in configTypes)
                 {

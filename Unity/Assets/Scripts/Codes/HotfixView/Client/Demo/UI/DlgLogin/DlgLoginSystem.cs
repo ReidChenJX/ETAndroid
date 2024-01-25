@@ -39,10 +39,14 @@ namespace ET.Client
                 
                 // 获取区服信息
                 errorCode = await LoginHelper.GetServerInfos(self.ClientScene());
+                // 手动设置选择区服
+                self.DomainScene().GetComponent<ServerInfoComponent>().CurrentServerId = 1;
+                // 手动创建角色信息 角色名 = 登录名
+                errorCode = await LoginHelper.CreateRole(self.ClientScene(), self.View.E_AccountInputField.text);
                 
                 // TODO 显示登录后的UI界面
                 self.DomainScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Login);
-                self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Lobby);
+                self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Server);
                 
             }
             catch(Exception e)
@@ -51,5 +55,9 @@ namespace ET.Client
                 return;
             }
         }
+        
+        
+        
+        
     }
 }
