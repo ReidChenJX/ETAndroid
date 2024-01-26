@@ -25,10 +25,12 @@ namespace ET.Client
         {
             try
             {
+                string accountText = self.View.E_AccountInputField.text.Trim();
+                string passWdText = self.View.E_PasswordInputField.text.Trim();
                 int errorCode =  await LoginHelper.LoginAccount(
                     self.ClientScene(), 
-                    self.View.E_AccountInputField.text, 
-                    self.View.E_PasswordInputField.text);
+                    accountText, 
+                    passWdText);
 
                 if(errorCode != ErrorCode.ERR_Success)
                 {
@@ -42,7 +44,7 @@ namespace ET.Client
                 // 手动设置选择区服
                 self.DomainScene().GetComponent<ServerInfoComponent>().CurrentServerId = 1;
                 // 手动创建角色信息 角色名 = 登录名
-                errorCode = await LoginHelper.CreateRole(self.ClientScene(), self.View.E_AccountInputField.text);
+                errorCode = await LoginHelper.CreateRole(self.ClientScene(), accountText);
                 
                 // TODO 显示登录后的UI界面
                 self.DomainScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Login);

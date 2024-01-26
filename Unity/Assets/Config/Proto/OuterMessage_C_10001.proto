@@ -315,3 +315,22 @@ message A2C_CreateRole // IResponse
 	string Message = 3;
 	RoleInfoProto RoleInfo = 4;
 }
+
+//ResponseType A2C_GetGate
+message C2A_GetGate // IRequest
+{
+	int32 RpcId = 1;
+	string Token = 2;
+	int64 AccountId = 3;
+	string AccountName = 4;
+}
+
+message A2C_GetGate // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string Address = 4;
+	int64 Key = 5;
+	int64 GateId = 6;
+}

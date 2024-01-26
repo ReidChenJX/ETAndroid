@@ -17,6 +17,7 @@ namespace ET.Client
             clientScene.AddComponent<AccountInfoComponent>();
             clientScene.AddComponent<ServerInfoComponent>();
             clientScene.AddComponent<RoleInfoComponent>();
+            clientScene.AddComponent<GateInfoComponent>();
 
             EventSystem.Instance.Publish(clientScene, new EventType.AfterCreateClientScene());
             return clientScene;

@@ -5,5 +5,6 @@ namespace ET.Client
     {
         public string Token { get; set; }
         public long AccountId { get; set; }
+        public string AccountName { get; set; }
     }
 }
