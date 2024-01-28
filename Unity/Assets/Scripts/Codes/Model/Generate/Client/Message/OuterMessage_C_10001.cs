@@ -369,6 +369,9 @@ namespace ET
 		[ProtoMember(3)]
 		public long GateId { get; set; }
 
+		[ProtoMember(4)]
+		public long AccountId { get; set; }
+
 	}
 
 	[Message(OuterMessage.G2C_LoginGate)]

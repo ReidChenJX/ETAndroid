@@ -13,6 +13,8 @@ namespace ET
         public Dictionary<long, Dictionary<string, StartSceneConfig>> ClientScenesByName = new Dictionary<long, Dictionary<string, StartSceneConfig>>();
 
         public StartSceneConfig LocationConfig;
+        
+        public StartSceneConfig LoginCenterConfig;
 
         public List<StartSceneConfig> Realms = new List<StartSceneConfig>();
         
@@ -63,6 +65,9 @@ namespace ET
                         break;
                     case SceneType.BenchmarkServer:
                         this.BenchmarkServer = startSceneConfig;
+                        break;
+                    case SceneType.LoginCenter:
+                        this.LoginCenterConfig = startSceneConfig;
                         break;
                 }
             }

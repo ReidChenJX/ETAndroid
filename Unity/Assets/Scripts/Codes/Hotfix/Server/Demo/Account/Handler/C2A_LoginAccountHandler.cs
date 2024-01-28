@@ -11,32 +11,32 @@ namespace ET.Server
     {
         protected override async ETTask Run(Session session, C2A_LoginAccount request, A2C_LoginAccount response)
         {
-            Log.Debug("C2A_LoginAccountHandler: ÏûÏ¢´¦Àí");
+            Log.Debug("C2A_LoginAccountHandler: æ¶ˆæ¯å¤„ç†");
             if (session.DomainScene().SceneType != SceneType.Account)
             {
-                Log.Error($"ÇëÇóµÄScene´íÎó£¬µÇÂ¼ÇëÇóµ±Ç°SceneÎª£º{session.DomainScene().SceneType}");
+                Log.Error($"è¯·æ±‚çš„Sceneé”™è¯¯ï¼Œç™»å½•è¯·æ±‚å½“å‰Sceneä¸ºï¼š{session.DomainScene().SceneType}");
                 session?.Dispose();
                 return;
             }
 
-            // Á´½ÓÍ¨¹ı£¬ÒÆ³öµ±Ç°Session ÉÏµÄ×Ô¶¯Ïú»Ù¶¨Ê±Æ÷
+            // é“¾æ¥é€šè¿‡ï¼Œç§»å‡ºå½“å‰Session ä¸Šçš„è‡ªåŠ¨é”€æ¯å®šæ—¶å™¨
             session.RemoveComponent<SessionAcceptTimeoutComponent>();
 
-            // Ëø¶¨µÚÒ»´ÎÑéÖ¤
+            // é”å®šç¬¬ä¸€æ¬¡éªŒè¯
             if (session.GetComponent<SessionLockComponent>() != null)
             {
-                // session ÔÚµÚÒ»´ÎÇëÇóÊ±¹ÒÔØSessionLockComponent ×é¼ş£¬ºóĞøÇëÇóÅĞ¶Ï´ËÊ±ÒÑ¹ÒÔØ£¬Ôò×Ô¶¯È¡Ïû
+                // session åœ¨ç¬¬ä¸€æ¬¡è¯·æ±‚æ—¶æŒ‚è½½SessionLockComponent ç»„ä»¶ï¼Œåç»­è¯·æ±‚åˆ¤æ–­æ­¤æ—¶å·²æŒ‚è½½ï¼Œåˆ™è‡ªåŠ¨å–æ¶ˆ
                 response.Error = ErrorCode.ERR_RequestRespeated;
                 session.Disconnect().Coroutine();
                 return;
             }
 
-            // µÇÂ¼ÑéÖ¤
+            // ç™»å½•éªŒè¯
             if (string.IsNullOrEmpty(request.AccountName) || string.IsNullOrEmpty(request.PassWord))
             {
                 response.Error = ErrorCode.ERR_LoginInfoError;
 
-                // * Î´·µ»ØÏûÏ¢ÏÈ×¢ÏúSession ÊÇ·ñ»áµ¼ÖÂ response ÎŞ·¨·µ»Ø£¿
+                // * æœªè¿”å›æ¶ˆæ¯å…ˆæ³¨é”€Session æ˜¯å¦ä¼šå¯¼è‡´ response æ— æ³•è¿”å›ï¼Ÿ
                 session.Disconnect().Coroutine();
                 return;
             }
@@ -49,16 +49,16 @@ namespace ET.Server
             }
 
 
-            Log.Debug("C2A_LoginAccountHandler: ErrorCode.ERR_Success ½øÈëÑéÖ¤»·½Ú");
-            // ÇëÇó³É¹¦£¬¶Ôsession ½øĞĞËø¶¨
+            Log.Debug("C2A_LoginAccountHandler: ErrorCode.ERR_Success è¿›å…¥éªŒè¯ç¯èŠ‚");
+            // è¯·æ±‚æˆåŠŸï¼Œå¯¹session è¿›è¡Œé”å®š
             using (session.AddComponent<SessionLockComponent>())
             {
-                // ·ÀÖ¹Í¬Ê±µÇÂ¼×¢²á£¬¶ÔÊı¾İ¿âÇëÇóËø¶¨
+                // é˜²æ­¢åŒæ—¶ç™»å½•æ³¨å†Œï¼Œå¯¹æ•°æ®åº“è¯·æ±‚é”å®š
                 using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.LoginAccount, request.AccountName.Trim().GetHashCode()))
                 {
-                    // ¶ÔPassword MD5¼ÓÃÜ
+                    // å¯¹Password MD5åŠ å¯†
                     string passWordMD5 = MD5Helper.StringMD5(request.PassWord.Trim());
-                    // Êı¾İ¿âÑéÖ¤
+                    // æ•°æ®åº“éªŒè¯
                     var accountInfoList = await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Query<Account>(d => d.AccountName.Equals(request.AccountName.Trim()));
                     Account account = null;
 
@@ -85,23 +85,23 @@ namespace ET.Server
                     }
                     else
                     {
-                        Log.Debug("Êı¾İ¿âÎŞÊı¾İ£¬×Ô¶¯´´½¨¡£");
-                        // Session Ò²ÊÇ×é¼ş£¬ĞÂ½¨µÄaccount ĞèÒª¹ÒÔØÔÚÆäÏÂ£¬ÓÃÓÚ¼ÇÂ¼£¬Èë¿âÕË»§ĞÅÏ¢
+                        Log.Debug("æ•°æ®åº“æ— æ•°æ®ï¼Œè‡ªåŠ¨åˆ›å»ºã€‚");
+                        // Session ä¹Ÿæ˜¯ç»„ä»¶ï¼Œæ–°å»ºçš„account éœ€è¦æŒ‚è½½åœ¨å…¶ä¸‹ï¼Œç”¨äºè®°å½•ï¼Œå…¥åº“è´¦æˆ·ä¿¡æ¯
                         account = session.AddChild<Account>();
                         account.AccountName = request.AccountName.Trim();
                         account.PassWord = passWordMD5;
                         account.CreateTime = TimeHelper.ServerNow();
                         account.AccountType = (int)AccountType.General;
 
-                        // Êı¾İÈë¿â
+                        // æ•°æ®å…¥åº“
                         await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Save<Account>(account);
 
-                        Log.Debug("Êı¾İÈë¿â³É¹¦");
+                        Log.Debug("æ•°æ®å…¥åº“æˆåŠŸ");
                     }
 
-                    Log.Debug("ErrorCode.ERR_Success: ÑéÖ¤³É¹¦ºó£¬ÅĞ¶Ï¸ÃÕËºÅÊÇ·ñÒÑ¾­µÇÂ¼");
+                    Log.Debug("ErrorCode.ERR_Success: éªŒè¯æˆåŠŸåï¼Œåˆ¤æ–­è¯¥è´¦å·æ˜¯å¦å·²ç»ç™»å½•");
 
-                    // ÑéÖ¤³É¹¦ºó£¬ÅĞ¶Ï¸ÃÕËºÅÊÇ·ñÒÑÔÚÕË»§ÖĞĞÄ·şÎñÆ÷
+                    // éªŒè¯æˆåŠŸåï¼Œåˆ¤æ–­è¯¥è´¦å·æ˜¯å¦å·²åœ¨è´¦æˆ·ä¸­å¿ƒæœåŠ¡å™¨
                     StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), "LoginCenter");
                     long loginCenterInstanceId = startSceneConfig.InstanceId;
                     var loginAccountRespone = (L2A_LoginAccountResponse)await ActorMessageSenderComponent.Instance.Call(
@@ -115,11 +115,11 @@ namespace ET.Server
                         return;
                     }
                     
-                    // ÅĞ¶Ï¸ÃÕËºÅÊÇ·ñÒÑÔÚµÇÂ¼·şÎñÆ÷
+                    // åˆ¤æ–­è¯¥è´¦å·æ˜¯å¦å·²åœ¨ç™»å½•æœåŠ¡å™¨
                     long accountSessionInstanceId = session.DomainScene().GetComponent<AccountSessionsComponent>().Get(account.Id);
                     Session otherSession = Root.Instance.Get(accountSessionInstanceId) as Session;
 
-                    // ¸ÃÕËºÅÒÑµÇÂ¼£¬ÓÉ·şÎñÆ÷Ïò¿Í»§¶Ë·¢ÆğÍËÏß
+                    // è¯¥è´¦å·å·²ç™»å½•ï¼Œç”±æœåŠ¡å™¨å‘å®¢æˆ·ç«¯å‘èµ·é€€çº¿
                     if (otherSession != null)
                     {
                         otherSession.Send(new A2C_Disconnect() { Error = ErrorCode.ERR_ExtraAccount });
@@ -127,7 +127,7 @@ namespace ET.Server
                     }
 
                     session.DomainScene().GetComponent<AccountSessionsComponent>().Add(account.Id, session.InstanceId);
-                    // µÇÂ¼ÇëÇó³ÖĞøÒ»¶¨Ê±¼äºó£¬×Ô¶¯¶Ï¿ª
+                    // ç™»å½•è¯·æ±‚æŒç»­ä¸€å®šæ—¶é—´åï¼Œè‡ªåŠ¨æ–­å¼€
                     session.AddComponent<AccountCheckOutTimeComponent, long>(account.Id);
                     
                     string token = TimeHelper.ServerNow().ToString() + RandomGenerator.RandomNumber(int.MinValue, int.MaxValue).ToString();

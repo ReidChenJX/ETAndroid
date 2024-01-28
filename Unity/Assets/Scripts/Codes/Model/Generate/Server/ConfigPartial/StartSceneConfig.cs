@@ -14,6 +14,8 @@ namespace ET
 
         public StartSceneConfig LocationConfig;
 
+        public StartSceneConfig LoginCenterConfig;
+
         public List<StartSceneConfig> Realms = new List<StartSceneConfig>();
         
         public List<StartSceneConfig> Routers = new List<StartSceneConfig>();
@@ -63,6 +65,9 @@ namespace ET
                         break;
                     case SceneType.BenchmarkServer:
                         this.BenchmarkServer = startSceneConfig;
+                        break;
+                    case SceneType.LoginCenter:
+                        this.LoginCenterConfig = startSceneConfig;
                         break;
                 }
             }

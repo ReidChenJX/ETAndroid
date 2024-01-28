@@ -16,6 +16,7 @@ namespace ET
         public const int LoginCenterLock = 10;          // 账户中心请求锁
         public const int GateLoginLock = 11;            // Gate 踢下线请求锁   
         public const int CreateRoleLock = 12;           // 用户创建锁
+        public const int LoginGate = 13;                // Client 登录Gate
 
         public const int Max = 100; // 这个必须最大
     }

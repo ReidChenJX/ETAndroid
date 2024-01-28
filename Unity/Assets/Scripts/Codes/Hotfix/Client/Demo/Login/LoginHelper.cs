@@ -183,6 +183,7 @@ namespace ET.Client
         public static async ETTask<int> GatGate(Scene clientScene)
         {
             // 获取Gate 网关地址，并登录
+            G2C_LoginGate g2CLoginGate = null;
             try
             {
                 // A2C_GetGate 客户端向登录服务器申请网关
@@ -191,30 +192,42 @@ namespace ET.Client
                     AccountId = clientScene.GetComponent<AccountInfoComponent>().AccountId,
                     Token = clientScene.GetComponent<AccountInfoComponent>().Token,
                     AccountName = clientScene.GetComponent<AccountInfoComponent>().AccountName
-                    
                 });
-                
+
                 // gate Session
                 Session gateSession = await RouterHelper.CreateRouterSession(clientScene, NetworkHelper.ToIPEndPoint(a2CGetGate.Address));
                 // gate Session 挂载至客户端，后续消息由gate 进行转发
                 clientScene.GetComponent<SessionComponent>().Session.Dispose();
                 clientScene.GetComponent<SessionComponent>().Session = gateSession;
-                
+
                 // client add GateInfoComponent
-                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
-                    new C2G_LoginGate() { Key = a2CGetGate.Key, GateId = a2CGetGate.GateId });
+                g2CLoginGate = (G2C_LoginGate)await gateSession.Call(
+                    new C2G_LoginGate()
+                    {
+                        Key = a2CGetGate.Key, 
+                        GateId = a2CGetGate.GateId,
+                        AccountId = clientScene.GetComponent<AccountInfoComponent>().AccountId
+                    });
 
                 clientScene.GetComponent<GateInfoComponent>().Adderss = a2CGetGate.Address;
                 clientScene.GetComponent<GateInfoComponent>().GateId = a2CGetGate.GateId;
                 clientScene.GetComponent<GateInfoComponent>().Key = a2CGetGate.Key;
                 clientScene.GetComponent<GateInfoComponent>().PlayerId = g2CLoginGate.PlayerId;
 
-                Log.Debug("登陆gate成功!"); 
+                Log.Debug("登陆gate成功!");
             }
             catch (Exception e)
             {
+                clientScene.GetComponent<SessionComponent>().Session.Dispose();
                 Log.Debug(e.ToString());
             }
+
+            if (g2CLoginGate.Error != ErrorCode.ERR_Success)
+            {
+                clientScene.GetComponent<SessionComponent>().Session.Dispose();
+                return  g2CLoginGate.Error;
+            }
+            
 
             return ErrorCode.ERR_Success;
         }
