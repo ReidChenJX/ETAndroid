@@ -46,9 +46,12 @@ namespace ET.Client
                 // 手动创建角色信息 角色名 = 登录名
                 errorCode = await LoginHelper.CreateRole(self.ClientScene(), accountText);
                 
+                // EnterMap 
+                await EnterMapHelper.EnterMapAsync(self.ClientScene());
+                
                 // TODO 显示登录后的UI界面
                 self.DomainScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Login);
-                self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Server);
+                // self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Server);
                 
             }
             catch(Exception e)

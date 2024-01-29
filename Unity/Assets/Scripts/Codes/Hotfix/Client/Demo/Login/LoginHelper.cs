@@ -180,7 +180,7 @@ namespace ET.Client
             return a2CCreateRole.Error;
         }
 
-        public static async ETTask<int> GatGate(Scene clientScene)
+        public static async ETTask<int> EnterGame(Scene clientScene)
         {
             // 获取Gate 网关地址，并登录
             G2C_LoginGate g2CLoginGate = null;
