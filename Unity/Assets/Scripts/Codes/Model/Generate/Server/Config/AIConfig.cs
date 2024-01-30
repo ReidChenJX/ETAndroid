@@ -1,3 +1,10 @@
+/*
+ *FileName:      AIConfig.cs
+ *Author:        ReidChen
+ *Date:          2024/01/30 09:55:42
+ *UnityVersion:  2021.3.29f1c1
+ *Description:
+*/
 using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;

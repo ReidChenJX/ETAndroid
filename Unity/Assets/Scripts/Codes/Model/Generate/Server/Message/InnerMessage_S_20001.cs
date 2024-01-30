@@ -1,3 +1,10 @@
+/*
+ *FileName:      InnerMessage_S_20001.cs
+ *Author:        ReidChen
+ *Date:          2024/01/29 15:28:22
+ *UnityVersion:  2021.3.29f1c1
+ *Description:
+*/
 using ET;
 using ProtoBuf;
 using System.Collections.Generic;

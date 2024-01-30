@@ -41,7 +41,7 @@ namespace ET.Server
 					
 					// 由Gate 服务器向 LoginCenter 服务器发送信息
 					StartSceneConfig loginCenterConfig = StartSceneConfigCategory.Instance.LoginCenterConfig;
-					L2G_AddLoginRecord l2GAddLoginRecord = (L2G_AddLoginRecord)await MessageHelper.CallActor(loginCenterConfig.InstanceId,
+					L2G_AddLoginRecord l2GAddLoginRecord = (L2G_AddLoginRecord)await ActorMessageSenderComponent.Instance.Call(loginCenterConfig.InstanceId,
 						new G2L_AddLoginRecord() { AccountId = request.AccountId, ServerId = scene.Zone });
 
 					if (l2GAddLoginRecord.Error != ErrorCode.ERR_Success)

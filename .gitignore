@@ -2,9 +2,13 @@
 .project
 .pydevproject
 .sconsign.dblite
-
+*.meta
+*.csproj
+*.png
 *.pyc
 *.suo
+*.exr
+*.assert
 
 .settings/
 .localhistory/
@@ -19,6 +23,16 @@ Opt/
 bin/
 Bin/
 obj/
+/Unity/Assets/ThirdPart/
+/Unity/Assets/TextMeshFont/
+/Unity/Assets/Plugins/Demigiant/
+/Unity/Assets/Plugins/Easy performant outline/
+/Unity/Assets/PumpRes/
+/Unity/Assets/PumpScript/
+/Unity/Assets/StreamingAssets/AVProVideoSamples/
+/Unity/Assets/StreamingAssets/Scenario/
+/Unity/Assets/TextMesh Pro/
+
 _ReSharper.CSharp/
 *.opensdf
 *.sdf

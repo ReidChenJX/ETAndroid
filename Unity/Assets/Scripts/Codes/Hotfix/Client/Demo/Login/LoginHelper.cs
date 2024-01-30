@@ -227,7 +227,6 @@ namespace ET.Client
                 clientScene.GetComponent<SessionComponent>().Session.Dispose();
                 return  g2CLoginGate.Error;
             }
-            
 
             return ErrorCode.ERR_Success;
         }
