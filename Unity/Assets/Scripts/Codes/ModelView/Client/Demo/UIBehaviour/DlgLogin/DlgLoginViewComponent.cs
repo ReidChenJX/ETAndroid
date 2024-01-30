@@ -109,6 +109,40 @@ namespace ET.Client
      		}
      	}
 
+		public UnityEngine.UI.Text E_LoginErrorTextText
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_LoginErrorTextText == null )
+     			{
+		    		this.m_E_LoginErrorTextText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject,"Sprite_BackGround/E_LoginErrorText");
+     			}
+     			return this.m_E_LoginErrorTextText;
+     		}
+     	}
+
+		public UnityEngine.UI.Text E_LoginVersionText
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_E_LoginVersionText == null )
+     			{
+		    		this.m_E_LoginVersionText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject,"Sprite_BackGround/E_LoginVersion");
+     			}
+     			return this.m_E_LoginVersionText;
+     		}
+     	}
+
 		public void DestroyWidget()
 		{
 			this.m_E_LoginButton = null;
@@ -117,6 +151,8 @@ namespace ET.Client
 			this.m_E_AccountImage = null;
 			this.m_E_PasswordInputField = null;
 			this.m_E_PasswordImage = null;
+			this.m_E_LoginErrorTextText = null;
+			this.m_E_LoginVersionText = null;
 			this.uiTransform = null;
 		}
 
@@ -126,6 +162,8 @@ namespace ET.Client
 		private UnityEngine.UI.Image m_E_AccountImage = null;
 		private UnityEngine.UI.InputField m_E_PasswordInputField = null;
 		private UnityEngine.UI.Image m_E_PasswordImage = null;
+		private UnityEngine.UI.Text m_E_LoginErrorTextText = null;
+		private UnityEngine.UI.Text m_E_LoginVersionText = null;
 		public Transform uiTransform = null;
 	}
 }

@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 251156902}
   - component: {fileID: 251156904}
   - component: {fileID: 251156903}
+  - component: {fileID: 251156905}
   m_Layer: 0
   m_Name: UICamera
   m_TagString: Untagged
@@ -323,7 +324,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: -100
+  m_Depth: -99
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 32
@@ -338,6 +339,14 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!81 &251156905
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251156901}
+  m_Enabled: 1
 --- !u!1 &342975271
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +627,7 @@ Canvas:
   m_GameObject: {fileID: 1114695592}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 251156904}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -628,7 +637,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!850595691 &1211380169
 LightingSettings:
@@ -702,7 +711,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1269863796}
   - component: {fileID: 1269863799}
-  - component: {fileID: 1269863798}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -725,14 +733,6 @@ Transform:
   m_Father: {fileID: 575235020}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 53.8, y: 0, z: 0}
---- !u!81 &1269863798
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269863795}
-  m_Enabled: 1
 --- !u!20 &1269863799
 Camera:
   m_ObjectHideFlags: 0

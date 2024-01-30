@@ -21,7 +21,7 @@ namespace ET.Server
 			}
 			
 			unit.AddComponent<MoveComponent>();
-			unit.AddComponent<PathfindingComponent, string>(scene.Name);
+			//unit.AddComponent<PathfindingComponent, string>(scene.Name);
 			unit.Position = new float3(-10, 0, -10);
 			
 			unit.AddComponent<MailBoxComponent>();
