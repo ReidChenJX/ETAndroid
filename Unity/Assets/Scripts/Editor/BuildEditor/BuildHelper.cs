@@ -150,7 +150,7 @@ namespace ET
 
             if (isContainAB)
             {
-                FileHelper.CleanDirectory("Assets/StreamingAssets/");
+                //FileHelper.CleanDirectory("Assets/StreamingAssets/");
                 FileHelper.CopyDirectory(fold, "Assets/StreamingAssets/");
             }
 
